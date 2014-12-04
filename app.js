@@ -21,6 +21,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/projectsteam');
+
 var routes = require('./routes');
 app.use('/', routes);
 
@@ -54,10 +57,6 @@ app.use(function(err, req, res, next) {
         error: {}
     });
 });
-
-
-var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/projectsteam');
 
 module.exports = app;
 
