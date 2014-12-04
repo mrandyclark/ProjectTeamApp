@@ -9,14 +9,17 @@ block content
 						th Id
 						th Name
 						th
-							span(class='sr-only') Edit
+							span(class='sr-only') Schedule
 						th
-							span(class='sr-only') Delete
+							span(class='sr-only') Edit
+						//th
+						//	span(class='sr-only') Delete
 				tbody
 					each member in members
 						tr
 							td #{member.id}
 							td #{member.name}
+							td Schedule
 							td 
-								a(href="/member/#{member.id}") edit
-							td delete
+								a(href="/member/#{member.id}") Edit
+							// td Delete
