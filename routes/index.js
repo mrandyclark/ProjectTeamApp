@@ -3,6 +3,7 @@
 // Update -> Put
 // Delete -> Delete
 
+var db = require('../db');
 var express = require('express');
 var router = express.Router();
 
@@ -13,14 +14,27 @@ router.get('/', function(req, res) {
 });
 
 
-// create
-router.post('/member', function (req, res) {
-	res.send('Got a POST request');
+///////////////
+/// members ///
+///////////////
+// list
+router.get('/members', function (req, res) {
+	res.render('members/list', { members: db.members });
 });
 
 // read
-router.get('/member', function (req, res) {
-	res.send('Hello World!');
+router.get('/member/:id', function (req, res) {
+	var id = req.params.id;
+
+	res.render(
+		'members/view',
+		{ member: db.members[id]}
+	);
+});
+
+// create
+router.post('/membe', function (req, res) {
+	res.send('Got a POST request at /member');
 });
 
 // update

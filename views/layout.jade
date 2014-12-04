@@ -5,9 +5,11 @@ html
 		script(type='text/javascript', src='/vendor/jquery-1.10.2.min.js')
 		script(type='text/javascript', src='/vendor/bootstrap/js/bootstrap.min.js')
 		script(type='text/javascript', src='/vendor/f2.min.js')
+		block scripts
 
 		link(rel='stylesheet', href="/vendor/bootstrap/css/bootstrap.min.css")
 		link(rel='stylesheet', href="/vendor/bootstrap/css/bootstrap-theme.min.css")
+		block styles
 
 	body
 		div(class='container-fluid')
@@ -17,15 +19,15 @@ html
 					nav(id='nav' role='navigation')
 						ul(class='nav nav-pills')
 							li
-								a(href='./index', role='tab', data-toggle='tab') Home
+								a(href='/') Home
 
 							li(role='presentation', class='dropdown')
-								a(class='dropdown-toggle', data-toggle='dropdown', href='#', role='button' aria-expanded='false') Our Team
+								a(class='dropdown-toggle', data-toggle='dropdown', href='#', role='button' aria-expanded='false') Team Settings 
 									span(class='caret')
 
 								ul(class='dropdown-menu', role='menu')
 									li(class='active')
-										a Team Members
+										a(href='/members') Team Members
 									li
 										a Project Calendar Dates
 									li
@@ -33,11 +35,13 @@ html
 									li
 										a Projects
 									li
-										a Code Review Rooms
+										a Code Reviews
 							li
-								a Raw
+								a Upcoming Projects
 							li
-								a Upcoming
+								a Current Schedule
+							li
+								a Code Reviews
 
 		main(class='container-fluid')
 			block content
