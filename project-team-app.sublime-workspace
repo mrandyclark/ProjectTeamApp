@@ -1,0 +1,238 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"projet",
+				"projects"
+			],
+			[
+				"teamM",
+				"teamMember"
+			],
+			[
+				"team",
+				"teamMember"
+			],
+			[
+				"formC",
+				"formColumn"
+			],
+			[
+				"renderTeamN",
+				"renderTeamMemberNav"
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "Packages/User/node.sublime-build",
+	"command_palette":
+	{
+		"height": 58.0,
+		"selected_items":
+		[
+			[
+				"Package Control: insta",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 416.0
+	},
+	"console":
+	{
+		"height": 398.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = '7183a2d3e96f11eeadd761d777e62404' + 'e330c659d4bb41d3bdf022e94cab3cd0'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by) "
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/C/Users/andrew.clark/Desktop/ProjectTeamApp"
+	],
+	"file_history":
+	[
+		"/C/Users/andrew.clark/Desktop/ProjectTeamApp/views/layout.jade",
+		"/C/Users/andrew.clark/Desktop/ProjectTeamApp/views/index.jade",
+		"/C/Users/andrew.clark/Desktop/ProjectTeamApp/public/stylesheets/main.css",
+		"/C/Users/andrew.clark/Desktop/ProjectTeamApp/db.js",
+		"/C/Users/andrew.clark/Desktop/ProjectTeamApp/app.js",
+		"/C/Users/andrew.clark/Desktop/ProjectTeamApp/routes/index.js",
+		"/C/Users/andrew.clark/Desktop/ProjectTeamApp/views/members/list.jade",
+		"/C/Users/andrew.clark/Desktop/ProjectTeamApp/views/members/view.jade",
+		"/C/Users/andrew.clark/Desktop/ProjectTeamApp/project-team-app.sublime-project",
+		"/C/Users/andrew.clark/Desktop/ProjectTeamApp/package.json",
+		"/C/Users/andrew.clark/Desktop/team-utilization/index.html",
+		"/C/Users/andrew.clark/Desktop/ProjectTeamApp/views/error.jade",
+		"/C/Users/andrew.clark/Desktop/ProjectTeamApp/views/members.jade",
+		"/C/Users/andrew.clark/Desktop/team-utilization/js/data.js",
+		"/C/Users/andrew.clark/Desktop/team-utilization/js/page-managers/index-page-manager.js",
+		"/C/Users/andrew.clark/Desktop/ProjectTeamApp/routes/members.js",
+		"/C/Users/andrew.clark/Desktop/ProjectTeamApp/routes/users.js",
+		"/C/Users/andrew.clark/Desktop/ProjectTeamApp/node_modules/mongodb/lib/mongodb/connection/repl_set/strategies/ping_strategy.js",
+		"/C/Users/andrew.clark/Desktop/ProjectTeamApp/node_modules/jade/node_modules/constantinople/node_modules/uglify-js/node_modules/source-map/build/prefix-utils.jsm",
+		"/C/Users/andrew.clark/Desktop/ProjectTeamApp/public/stylesheets/style.css",
+		"/C/Users/andrew.clark/Desktop/ProjectTeamApp/npm-debug.log",
+		"/C/Users/andrew.clark/Desktop/team-utilization/css/index.css",
+		"/C/Users/andrew.clark/Desktop/team-utilization/report.html",
+		"/C/Users/andrew.clark/Desktop/handles/index.html",
+		"/C/Users/andrew.clark/Desktop/team-utilization/templates/team-member.html",
+		"/C/Users/andrew.clark/Desktop/team-utilization/js/page-managers/view-page-manager.js",
+		"/C/Users/andrew.clark/Desktop/handles/templates/mytemplate.html",
+		"/C/Users/andrew.clark/Desktop/team-utilization/css/main.css",
+		"/C/Users/andrew.clark/Desktop/team-utilization/css/view.css",
+		"/C/Users/andrew.clark/Desktop/team-utilization/view.html",
+		"/C/Projects/SCB/Eclipse/TradeProcessingApp/scripts/DataDumps/trade.xml",
+		"/C/Projects/SCB/Eclipse/TradeProcessingApp/scripts/DataDumps/tradeSingle.xml",
+		"/C/Users/andrew.clark/Downloads/37029129.xml",
+		"/C/Users/andrew.clark/Desktop/team-utilization/page-manager.js",
+		"/C/Users/andrew.clark/Desktop/team-utilization/data.js",
+		"/C/Projects/SCB/Eclipse/TradeProcessingApp/scripts/DataDumps/riskValuation.txt",
+		"/C/Projects/SCB/Eclipse/TradeProcessingApp/scripts/test-fullfxrates.js",
+		"/C/Users/andrew.clark/AppData/Roaming/Sublime Text 3/Packages/User/node.sublime-build",
+		"/C/Projects/SCB/Eclipse/TradeProcessingApp/scripts/test-fullriskvaluation.js",
+		"//d_www02/D_WWW02-Webhome/wallstdomains/playground/andyclark/code-reviews/page-manager.js"
+	],
+	"find":
+	{
+		"height": 23.0
+	},
+	"find_in_files":
+	{
+		"height": 90.0,
+		"where_history":
+		[
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			");\n",
+			"console.log",
+			"3702451622",
+			"3702451621",
+			"370245162",
+			"populateFields"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"370245162215246564654987",
+			"3702451622",
+			"3702451621"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 23.0
+	},
+	"input":
+	{
+		"height": 31.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 460.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"project": "project-team-app.sublime-project",
+	"replace":
+	{
+		"height": 42.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 233.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

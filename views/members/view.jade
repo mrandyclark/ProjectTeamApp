@@ -14,6 +14,9 @@ block content
 				if reportsTo != null
 					li Reports to #{reportsTo.name}
 				
-	div(class='row footer-menu')
+block footer
+	div(class='row')
 		div(class='col-md-12')
-			a(href='/members') Member List
+			ul(class='list-unstyled list-inline')
+				li
+					a(href='/members') Member List
