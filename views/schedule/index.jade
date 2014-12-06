@@ -1,0 +1,56 @@
+extends ../layout
+
+block scripts
+	script(type='text/javascript', src='/javascripts/code-reviews.js')
+
+	script(type='text/javascript').
+		$(document).ready(function() {
+			  $('[data-toggle="tooltip"]').tooltip();
+		});
+		
+block content
+	div(class='row')
+		div(class='col-md-12') 
+			h2(class='h3 pull-left') Current Schedule
+		
+			ul(class='nav nav-pills pull-right')
+				li
+					a(href='/schedule/members', data-toggle='tooltip', data-placement='top', title='Rollup schedules per team member') Team Rollup
+
+				li
+					a(href='/schedule/projects', data-toggle='tooltip', data-placement='top', title='Rollup schedules per team member') Project Rollup
+
+				li(class='dropdown' role='presentation')
+					a(class='dropdown-toggle', type='button', data-toggle='dropdown', aria-expanded='false', href='#')
+						| View 
+						span(class='caret')
+
+						ul(class='dropdown-menu dropdown-menu-right scrollable-menu', role='menu')
+							each member in members
+								li
+									a(href='/schedule/member/#{member.id}') #{member.name}
+	div(class='row')
+		div(class='col-md-12')
+			div(id='schedule')
+				table(class='table table-condensed')
+					thead
+						tr
+							th
+								span(class='sr-only') Team Member
+							each date in dates
+								th(class='text-center') #{date}
+					tbody
+						each member in members
+							tr
+								td(class='member-name') #{member.name}
+								each date in dates
+									// if > 98, red
+									// if 90-98, yellow
+									// otherwise, green
+									if false
+										td(class='warning text-center') --
+									else if true
+										td(class='danger text-center') --
+									else 
+										td(class='success text-center') --
+

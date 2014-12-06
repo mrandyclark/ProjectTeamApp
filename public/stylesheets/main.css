@@ -11,6 +11,12 @@ main {
 	padding-top: 15px;
 }
 
+.scrollable-menu {
+    height: auto;
+    max-height: 200px;
+    overflow-x: hidden;
+}
+
 .presenter { color: #d9534f; }
 .backup-presenter { color: #46b8da; }
 
