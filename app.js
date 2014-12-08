@@ -21,8 +21,18 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/projectsteam');
+// var mongoose = require('mongoose');
+// mongoose.connect('mongodb://localhost/projectsteam');
+
+var Datastore = require('nedb');
+app.db = {};
+app.db.reviewRooms = new Datastore({ filename: './database/review-rooms.db', autoload: true });
+app.db.positions = new Datastore({ filename: './database/positions.db', autoload: true });
+app.db.clients = new Datastore({ filename: './database/clients.db', autoload: true });
+app.db.members = new Datastore({ filename: './database/team-members.db', autoload: true });
+app.db.projects = new Datastore({ filename: './database/projects.db', autoload: true });
+app.db.schedules = new Datastore({ filename: './database/schedules.db', autoload: true });
+
 
 var routes = require('./routes');
 app.use('/', routes);

@@ -1,25 +1,17 @@
-// Create -> Post
-// Read   -> Get
-// Update -> Put
-// Delete -> Delete
+var Datastore = require('nedb');
+db = {};
+db.reviewRooms = new Datastore({ filename: '../database/review-rooms.db', autoload: true });
+db.positions = new Datastore({ filename: '../database/positions.db', autoload: true });
+db.clients = new Datastore({ filename: '../database/clients.db', autoload: true });
+db.members = new Datastore({ filename: '../database/team-members.db', autoload: true });
+db.projects = new Datastore({ filename: '../database/projects.db', autoload: true });
+db.schedules = new Datastore({ filename: '../database/schedules.db', autoload: true });
 
 var _ = require('underscore');
 var moment = require('moment');
 
-var db = require('../db');
 var express = require('express');
 var router = express.Router();
-
-// gets replaced by a db call
-function getValue(id, data) {
-	for(var i = 0; i < data.length; i++) {
-		if(data[i].id == id)
-		{
-			return data[i];
-		}	
-	}
-	return null;
-}
 
 var allRoutes = {
 	'/': function(req, res) {
@@ -27,7 +19,12 @@ var allRoutes = {
 	},
 
 	'/clients': function (req, res) {
-		res.render('clients/list', { clients: db.clients });
+		db.clients.find(
+			{}, 
+			function (err, docs) {
+				res.render('clients/list', { clients: docs });
+			}
+		);
 	},
 
 	'/projects': function (req, res) {
@@ -118,19 +115,3 @@ _.each(allRoutes, function(value, key) {
 });
 
 module.exports = router;
-
-
-// // create
-// router.post('/member', function (req, res) {
-// 	res.send('Got a POST request at /member');
-// });
-
-// // update
-// router.put('/member', function (req, res) {
-// 	res.send('Got a PUT request at /member');
-// });
-
-// // destroy
-// router.delete('/member', function (req, res) {
-// 	res.send('Got a DELETE request at /member');
-// });
