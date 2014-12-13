@@ -21,20 +21,27 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+var routes = require('./routes');
+
+
 // var mongoose = require('mongoose');
 // mongoose.connect('mongodb://localhost/projectsteam');
 
 var Datastore = require('nedb');
-app.db = {};
-app.db.reviewRooms = new Datastore({ filename: './database/review-rooms.db', autoload: true });
-app.db.positions = new Datastore({ filename: './database/positions.db', autoload: true });
-app.db.clients = new Datastore({ filename: './database/clients.db', autoload: true });
-app.db.members = new Datastore({ filename: './database/team-members.db', autoload: true });
-app.db.projects = new Datastore({ filename: './database/projects.db', autoload: true });
-app.db.schedules = new Datastore({ filename: './database/schedules.db', autoload: true });
+var db = {};
+db.reviewRooms = new Datastore({ filename: './database/review-rooms.db', autoload: true });
+db.positions = new Datastore({ filename: './database/positions.db', autoload: true });
+db.clients = new Datastore({ filename: './database/clients.db', autoload: true });
+db.members = new Datastore({ filename: './database/team-members.db', autoload: true });
+db.projects = new Datastore({ filename: './database/projects.db', autoload: true });
+db.schedules = new Datastore({ filename: './database/schedules.db', autoload: true });
 
+// Make our db accessible to our router
+app.use(function(req,res,next){
+    req.db = db;
+    next();
+});
 
-var routes = require('./routes');
 app.use('/', routes);
 
 // catch 404 and forward to error handler

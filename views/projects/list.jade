@@ -5,7 +5,7 @@ extends ../layout
 
 block content
 	div(class='row')
-		div(class='col-md-6')
+		div(class='col-md-12')
 			table(class='table table-condensed')
 				thead
 					tr
@@ -23,8 +23,8 @@ block content
 				tbody
 					each project in projects
 						tr
-							td #{project.id}
-							td #{project.client}
+							td #{project._id}
+							td #{project.client_id}
 							td #{project.name}
 							td #{project.contact}
 							td #{project.techLead}

@@ -1,12 +1,3 @@
-var Datastore = require('nedb');
-db = {};
-db.reviewRooms = new Datastore({ filename: '../database/review-rooms.db', autoload: true });
-db.positions = new Datastore({ filename: '../database/positions.db', autoload: true });
-db.clients = new Datastore({ filename: '../database/clients.db', autoload: true });
-db.members = new Datastore({ filename: '../database/team-members.db', autoload: true });
-db.projects = new Datastore({ filename: '../database/projects.db', autoload: true });
-db.schedules = new Datastore({ filename: '../database/schedules.db', autoload: true });
-
 var _ = require('underscore');
 var moment = require('moment');
 
@@ -19,6 +10,7 @@ var allRoutes = {
 	},
 
 	'/clients': function (req, res) {
+		var db = req.db;
 		db.clients.find(
 			{}, 
 			function (err, docs) {
@@ -28,7 +20,13 @@ var allRoutes = {
 	},
 
 	'/projects': function (req, res) {
-		res.render('projects/list', { projects: db.projects });
+		var db = req.db;
+		db.projects.find(
+			{}, 
+			function (err, docs) {
+				res.render('projects/list', { projects: docs });
+			}
+		);
 	},
 
 	'/code-reviews': function (req, res) {
@@ -59,7 +57,13 @@ var allRoutes = {
 
 	// list
 	'/members': function (req, res) {
-		res.render('members/list', { members: db.members });
+		var db = req.db;
+		db.members.find(
+			{}, 
+			function (err, docs) {
+				res.render('members/list', {members: docs });
+			}
+		);
 	},
 
 	// ability to pass:
@@ -95,18 +99,21 @@ var allRoutes = {
 
 	'/member/:id': function (req, res) {
 		var id = req.params.id;
-		var member = getValue(id, db.members);
-		var position = getValue(member.position, db.positions);
-		var reportsTo = getValue(member.reportsTo, db.members)
+		var db = req.db;
 
-		res.render(
-			'members/view',
-			{
-				member: member,
-				position: position,
-				reportsTo: reportsTo
+		db.members.findOne(
+			{ _id: id }, 
+			function (err, doc) {
+				res.render(
+					'members/view',
+					{
+						member: doc
+					}
+				);
 			}
 		);
+
+		
 	}
 };
 

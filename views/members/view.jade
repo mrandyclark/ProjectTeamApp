@@ -8,11 +8,8 @@ block content
 	div(class='row')
 		div(class='col-md-12')
 			ul
-				if position != null
-					li #{position.name}
-				
-				if reportsTo != null
-					li Reports to #{reportsTo.name}
+				li #{member.position_id}			
+				li Reports to #{member.reportsTo}
 				
 block footer
 	div(class='row')
