@@ -11,7 +11,7 @@ block scripts
 
 block content
 	div(class='row')
-		div(class='col-md-6')
+		div(class='col-md-8')
 			h2(class='h4') Team Members
 			table(class='table table-condensed')
 				thead
@@ -42,32 +42,31 @@ block content
 									
 							// td Delete
 
-		div(class='col-md-6')
+		div(class='col-md-4')
 			h2(class='h4') Add New Member
 			form(id='member-form', class='form-horizontal', role='form')
+				div(class='alert', role='alert', style='display: none')
 				div(class='form-group')
-					label(for='member-name', class='control-label col-sm-2') Name
-					div(class='col-sm-10')
+					label(for='member-name', class='control-label col-sm-4') Name
+					div(class='col-sm-8')
 						input(id='member-name', class='form-control', placeholder='Name')
 
 				div(class='form-group')
-					label(for='member-position-id', class='control-label col-sm-2') Position
-					div(class='col-sm-10')
-						select(id='position-id', class='form-control')
+					label(for='member-position-id', class='control-label col-sm-4') Position
+					div(class='col-sm-8')
+						select(id='member-position-id', class='form-control')
 							each position in positions
-								option(value='#{position._id').
-									#{position.name}
+								option(value='#{position._id}') #{position.name}
 
 				div(class='form-group')
-					label(for='member-reports-to', class='control-label col-sm-2') Reports To
-					div(class='col-sm-10')
+					label(for='member-reports-to', class='control-label col-sm-4') Reports To
+					div(class='col-sm-8')
 						select(id='member-reports-to', class='form-control')
 							option(value='')
 							each member in members
-								option(value='#{member._id').
-									#{member.name}
+								option(value='#{member._id}') #{member.name}
 
 				div(class='form-group')
-					div(class='col-sm-offset-2 col-sm-10')
-						button(class='btn btn-primary', type='submit') Create
+					div(class='col-sm-12')
+						button(class='btn btn-primary pull-right', type='submit') Create
 

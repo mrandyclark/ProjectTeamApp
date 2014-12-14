@@ -22,8 +22,11 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 var routes = require('./routes/index');
-var teamMembers = require('./routes/team-members');
-var codeReviews = require('./routes/code-reviews');
+var routeTeamMembers = require('./routes/team-members');
+var routeCodeReviews = require('./routes/code-reviews');
+var routeProjects = require('./routes/projects');
+var routeSchedule = require('./routes/schedule');
+var routeClients = require('./routes/clients');
 
 // var mongoose = require('mongoose');
 // mongoose.connect('mongodb://localhost/projectsteam');
@@ -44,8 +47,11 @@ app.use(function(req,res,next){
 });
 
 app.use('/', routes);
-app.use('/members', teamMembers);
-app.use('/code-reviews', codeReviews);
+app.use('/code-reviews', routeCodeReviews);
+app.use('/members', routeTeamMembers);
+app.use('/projects', routeProjects);
+app.use('/schedule', routeSchedule);
+app.use('/clients', routeClients);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

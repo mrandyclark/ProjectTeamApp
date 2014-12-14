@@ -1,15 +1,21 @@
-//- {id: 1, client: 1, contact: "Mike Servas", name: "e-Brokerage", sbm: "14780", size: "L", techLead: 2 });
-
-
 extends ../layout
+
+block scripts
+	script(type='text/javascript', src='/javascripts/page-managers/projects/list.js')
+
+	script(type='text/javascript').
+		$(document).ready(function() {
+			var pageManager = new PageManager();
+			pageManager.init();
+		});
 
 block content
 	div(class='row')
-		div(class='col-md-12')
+		div(class='col-md-8')
 			table(class='table table-condensed')
 				thead
 					tr
-						th Id
+						// th Id
 						th Client
 						th Name
 						th Contact
@@ -23,11 +29,13 @@ block content
 				tbody
 					each project in projects
 						tr
-							td #{project._id}
-							td #{project.client_id}
+							// td #{project._id}
+							// td #{project.client_id}
+							td= _.find(clients, function(client) { return client._id == project.client_id; }).name
 							td #{project.name}
 							td #{project.contact}
-							td #{project.techLead}
+							td= _.find(members, function(member) { return member._id == project.techLead; }).name
+
 							td #{project.sbm}
 							td #{project.size}
 							td
@@ -37,9 +45,49 @@ block content
 							//th
 							//	span(class='sr-only') Delete
 
-				tfoot
-					tr
-						th(colspan='8')
-							ul(class='list-unstyled list-inline')
-								li 
-									a(href='#') Add Project
+		div(class='col-md-4')
+			h2(class='h4') Add New Project
+			form(id='project-form', class='form-horizontal', role='form')
+				div(class='alert', role='alert', style='display: none')
+				
+				div(class='form-group')
+					label(for='project-client-id', class='control-label col-sm-4') Client
+					div(class='col-sm-8')
+						select(id='project-client-id', class='form-control' name='client_id')
+							option(value='')
+							each client in clients
+								option(value='#{client._id}') #{client.name}
+
+				div(class='form-group')
+					label(for='project-name', class='control-label col-sm-4') Name
+					div(class='col-sm-8')
+						input(id='client-name', class='form-control', placeholder='Name', name='name')
+
+				div(class='form-group')
+					label(for='project-contact-name', class='control-label col-sm-4') Contact
+					div(class='col-sm-8')
+						input(id='project-contact-name', class='form-control', placeholder='Contact', name='contact_name')
+
+				div(class='form-group')
+					label(for='project-tech-lead', class='control-label col-sm-4') Tech Lead
+					div(class='col-sm-8')
+						select(id='project-tech-lead', class='form-control', name='tech_lead_id')
+							each member in members
+								option(value='#{member._id}') #{member.name}
+
+				div(class='form-group')
+					label(for='project-sbm-number', class='control-label col-sm-4') SBM #
+					div(class='col-sm-8')
+						input(id='project-sbm-number', class='form-control', placeholder='SBM #', name='sbm_number')
+
+				div(class='form-group')
+					label(for='project-size', class='control-label col-sm-4') Size
+					div(class='col-sm-8')
+						select(id='project-size', class='form-control', name='project_size')
+							option S
+							option M
+							option L
+
+				div(class='form-group')
+					div(class='col-sm-12')
+						button(class='btn btn-primary pull-right', type='submit') Create

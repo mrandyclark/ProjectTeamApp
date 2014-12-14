@@ -66,36 +66,42 @@ router.post(
 		console.log("POST: ", req.body);
 
 		var db = req.db;
-		var name = req.body.name;
-		var position_id = req.body.position_id;
 
 		var member = { 
-			"name": name,
-			"position_id": position_id
+			"name": req.body.name,
+			"position_id": req.body.position_id,
+			"reportsTo": req.body.reportsTo
 		};
 
 		var apiResponse = {member: member};
 		// every team member should have a name and position id
-		if( !_.isString(member.name) || !_.isString(member.position_id) ) {
-			apiResponse.error = "no name or no position_id"
+		if(!_.isString(member.name) || member.name === '') {
+			apiResponse.error = "Please supply a name.";
 			apiResponse.success = false;
-		} else {
-			db.members.insert(
-				member, 
-				function (err, doc) {
-					if (!err) {
-						apiResponse.success = true;
-						return console.log("created");
-					} else {
-						apiResponse.error = err;
-						apiResponse.success = false;
-						return console.log(err);
-					}
-				}
-			);
+			res.send(apiResponse);
+			return;
+
+		} else if(!_.isString(member.position_id) || member.position_id === '' ) {
+			apiResponse.error = "Please supply a position.";
+			apiResponse.success = false;
+			res.send(apiResponse);
+			return;
 		}
 
-		res.send(apiResponse);
+		db.members.insert(
+			member, 
+			function (err, doc) {
+				if (!err) {
+					apiResponse.success = true;
+					console.log("created");
+				} else {
+					apiResponse.error = err;
+					apiResponse.success = false;
+				}
+
+				res.send(apiResponse);
+			}
+		);
 	}
 );
 

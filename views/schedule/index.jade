@@ -22,13 +22,23 @@ block content
 
 				li(class='dropdown' role='presentation')
 					a(class='dropdown-toggle', type='button', data-toggle='dropdown', aria-expanded='false', href='#')
-						| View 
+						| Members 
 						span(class='caret')
 
 						ul(class='dropdown-menu dropdown-menu-right scrollable-menu', role='menu')
 							each member in members
 								li
-									a(href='/schedule/member/#{member.id}') #{member.name}
+									a(href='/schedule/member/#{member._id}') #{member.name}
+
+				li(class='dropdown' role='presentation')
+					a(class='dropdown-toggle', type='button', data-toggle='dropdown', aria-expanded='false', href='#')
+						| Projects 
+						span(class='caret')
+
+						ul(class='dropdown-menu dropdown-menu-right scrollable-menu', role='menu')
+							each project in projects
+								li
+									a(href='/schedule/project/#{project._id}') #{project.name}
 	div(class='row')
 		div(class='col-md-12')
 			div(id='schedule')
@@ -42,7 +52,9 @@ block content
 					tbody
 						each member in members
 							tr
-								td(class='member-name') #{member.name}
+								td(class='member-name')
+									a(href='/schedule/member/#{member._id}') #{member.name}
+
 								each date in dates
 									// if > 98, red
 									// if 90-98, yellow

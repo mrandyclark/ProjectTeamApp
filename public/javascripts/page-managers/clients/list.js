@@ -12,28 +12,26 @@ PageManager.prototype.init = function () {
 // bind events to elements on the page
 //
 PageManager.prototype.bindEvents = function() {
-	$("#member-form").on(
+	$("#client-form").on(
 		"submit",
-		$.proxy(this.handleMemberForm, this)
+		$.proxy(this.handleClientForm, this)
 	);
 
 	return false;
 };
 
-PageManager.prototype.handleMemberForm = function(evt) {
+PageManager.prototype.handleClientForm = function(evt) {
 	evt.preventDefault();
 	
-	var $alertContainer = $("#member-form").find(".alert");
+	var $alertContainer = $("#client-form").find(".alert");
 	$alertContainer.slideUp();
 
-	return this.memberCreateRequest(
-		$("#member-name").val(),
-		$("#member-position-id").val(),
-		$("#member-reports-to").val()
+	return this.clientCreateRequest(
+		$("#client-name").val()
 	)
 		.done(function(response) {
 			if(response.success) {
-				$alertContainer.html(response.member.name + ' created.');
+				$alertContainer.html(response.client.name + ' created.');
 				$alertContainer.removeClass().addClass('alert alert-success');
 			} else { 
 				$alertContainer.html(response.error);
@@ -48,13 +46,11 @@ PageManager.prototype.handleMemberForm = function(evt) {
 		});
 };
 
-PageManager.prototype.memberCreateRequest = function(name, position, reportsTo) {
+PageManager.prototype.clientCreateRequest = function(name) {
 	return $.ajax({
-		url:"/members/create",
+		url:"/clients/create",
 		data: {
-			name: name,
-			position_id: position,
-			reportsTo: reportsTo
+			name: name
 		},
 		type: "POST"
 	});

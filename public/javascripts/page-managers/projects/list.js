@@ -12,28 +12,27 @@ PageManager.prototype.init = function () {
 // bind events to elements on the page
 //
 PageManager.prototype.bindEvents = function() {
-	$("#member-form").on(
+	$("#project-form").on(
 		"submit",
-		$.proxy(this.handleMemberForm, this)
+		$.proxy(this.handleProjectForm, this)
 	);
 
 	return false;
 };
 
-PageManager.prototype.handleMemberForm = function(evt) {
+PageManager.prototype.handleProjectForm = function(evt) {
 	evt.preventDefault();
-	
-	var $alertContainer = $("#member-form").find(".alert");
+	var $form = $(evt.target).closest("form");
+
+	var $alertContainer = $("#project-form").find(".alert");
 	$alertContainer.slideUp();
 
-	return this.memberCreateRequest(
-		$("#member-name").val(),
-		$("#member-position-id").val(),
-		$("#member-reports-to").val()
-	)
+	var project = $form.serialize();
+	
+	return this.projectCreateRequest(project)
 		.done(function(response) {
 			if(response.success) {
-				$alertContainer.html(response.member.name + ' created.');
+				$alertContainer.html(response.project.name + ' created.');
 				$alertContainer.removeClass().addClass('alert alert-success');
 			} else { 
 				$alertContainer.html(response.error);
@@ -48,14 +47,10 @@ PageManager.prototype.handleMemberForm = function(evt) {
 		});
 };
 
-PageManager.prototype.memberCreateRequest = function(name, position, reportsTo) {
+PageManager.prototype.projectCreateRequest = function(project) {
 	return $.ajax({
-		url:"/members/create",
-		data: {
-			name: name,
-			position_id: position,
-			reportsTo: reportsTo
-		},
+		url:"/projects/create",
+		data: project,
 		type: "POST"
 	});
 };
