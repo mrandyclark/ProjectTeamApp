@@ -29,42 +29,11 @@ var allRoutes = {
 		);
 	},
 
-	'/code-reviews': function (req, res) {
-		res.render('code-reviews/index');
-	},
-
-	'/code-reviews/settings': function(req, res) {
-		var cantPresent = db.cantPresent;
-		var cantPresentMembers = [];
-		_.each(cantPresent, function(value) {
-			cantPresentMembers.push(
-				getValue(value, db.members)
-			)
-		});
-		
-		res.render(
-			'code-reviews/settings',
-			{	
-				rooms: db.reviewRooms,
-				cantPresent: cantPresentMembers 
-			}
-		);
-	},
-
 	'/tech-focus': function(req, res) {
 		res.render('tech-focus/index');
 	},
 
-	// list
-	'/members': function (req, res) {
-		var db = req.db;
-		db.members.find(
-			{}, 
-			function (err, docs) {
-				res.render('members/list', {members: docs });
-			}
-		);
-	},
+	
 
 	// ability to pass:
 	// /scheudle/members 		--> shows all members (default)
@@ -95,25 +64,6 @@ var allRoutes = {
 				members: db.members
 			}
 		);
-	},
-
-	'/member/:id': function (req, res) {
-		var id = req.params.id;
-		var db = req.db;
-
-		db.members.findOne(
-			{ _id: id }, 
-			function (err, doc) {
-				res.render(
-					'members/view',
-					{
-						member: doc
-					}
-				);
-			}
-		);
-
-		
 	}
 };
 
