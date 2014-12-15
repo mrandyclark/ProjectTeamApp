@@ -1,8 +1,14 @@
-PageManager = function () { };
+PageManager = function (devmgrs, srdevs, devs, cantPresent, allRooms) {
+	this.teamDevManagers =  devmgrs.split(',');
+	this.teamSrDevelopers = srdevs.split(',');
+	this.teamDevelopers = devs.split(',');
+	this.teamCantPresent = cantPresent.split(',');
+	this.teamRooms = allRooms.split(',');
+};
 
 PageManager.prototype.init = function () {
 	// set default team
-	this.setClarkTeam();
+	// this.setClarkTeam();
 
 	// events
 	this.bindEvents();
@@ -26,9 +32,9 @@ PageManager.prototype.bindEvents = function() {
 
 PageManager.prototype.handleGeneration = function(evt) {
 	evt.preventDefault();
-	this.setClarkTeam();
+	// this.setClarkTeam();
 	return this.fullGenerate();
-}
+};
 
 //
 // 1) generate the teams
@@ -44,15 +50,15 @@ PageManager.prototype.fullGenerate = function(evt) {
 //
 // clark team is the best, obvi
 //
-PageManager.prototype.setClarkTeam = function() {
-	this.teamDevManagers = ["Andy Clark", "Matt Tordoff", "Kenny Nguyen"];
-	this.teamSrDevelopers = ["Alex Wicks", "Hardik Nathwani", "Jared Barnett", "Justin Allen", "Sebastian Moderski", "Shawn Farmer"];
-	this.teamDevelopers = ["Aaron Rutledge", "Andy Jepkes", "Arvind Dayal", "Dan Hawkley", "Jeremy Sweetwood", "Ian Cropper", "Matt Lackey", "Robert River", "Zeb Lawrence"]
-	this.teamCantPresent = [];
-	this.teamRooms = ["Yen", "Bucky", "Charles", "Pear"];
+// PageManager.prototype.setClarkTeam = function() {
+// 	this.teamDevManagers = ["Andy Clark", "Matt Tordoff", "Kenny Nguyen"];
+// 	this.teamSrDevelopers = ["Alex Wicks", "Hardik Nathwani", "Jared Barnett", "Justin Allen", "Sebastian Moderski", "Shawn Farmer"];
+// 	this.teamDevelopers = ["Aaron Rutledge", "Andy Jepkes", "Arvind Dayal", "Dan Hawkley", "Jeremy Sweetwood", "Ian Cropper", "Matt Lackey", "Robert River", "Zeb Lawrence"]
+// 	this.teamCantPresent = [];
+// 	this.teamRooms = ["Yen", "Bucky", "Charles", "Pear"];
 
-	return false;
-};
+// 	return false;
+// };
 
 // 
 // the magic happens here
