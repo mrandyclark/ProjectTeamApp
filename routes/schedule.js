@@ -7,14 +7,6 @@
 // maybe?
 // /schedule/client/:id 	--> shows multiple projects (all projects for a client)
 
-// {
-//		"project_id": "5VZZ6e6QUyyBAKSI",
-//		"team_member_id": "2XhEUnx9fRudguAO", 
-//		"date": "12/15/2014",
-//		"utilization": 80,
-//		_id: "507f191e810c1972"
-// }
-
 var _ = require('underscore');
 var moment = require('moment');
 
@@ -22,53 +14,70 @@ var express = require('express');
 var router = express.Router();
 
 router.get(
-	'/',
+	'/members',
 	function (req, res) {
 		var db = req.db;
 		var allDates = getAllDates();
 
-		// // entities
-		// [
-		// 	{
-		// 		name: "Andy Clark"
-		// 		link: "/schedules/member/xxx"
-		// 		dates: [ // objects from schedule keyed by date?
-		// 			12/24/2014: // {} 
-		// 		]
-		// 	}
-		// ]
-
-		db.schedules.find(
+			
+		// get all da team members
+		db.members.find(
 			{},
-			function(err, schedules) {
-				console.log(schedules);
-				var groupedSchedules = _.groupBy(schedules, 'team_member_id');
-				console.log(groupedSchedules);
+			function(err, allMembers) {
 
-				// db.members.find(
-				db.members.find({}).sort({ name: 1 }).exec(
-					function(err, members) {
-						db.projects.find({}).sort({ name: 1}).exec(
-							function(err, projects) {
+				console.log("1: ", allMembers);
+
+				// get all da projects, bro!
+				db.projects.find(
+					{},
+					function(err, allProjects) {
+
+						// get all the schedules
+						db.schedules.find(
+							{},
+							function(err, allSchedules) {
+
+								// now process that shit, homie!
+								var processedSchedules = {};
+								var groupedSchedules = _.groupBy(allSchedules, 'team_member_id');
+
+								_.each(
+									allMembers,
+									function(current, key) {
+
+										// this needs updated to actually rollup date percentages
+										var processedDates = processDates(groupedSchedules[current._id]);
+
+										processedSchedules[current._id] = {
+											name: current.name,
+											link: "/schedule/member/" + current._id,
+											_id: current._id,
+											dates: processedDates
+										}
+									}
+								)
+
+								console.log(processedSchedules);
+
+								// and boom goes the dynamite:
 								res.render(
 									'schedule/index',
 									{
-										title: "Schedule: Team Rollup", 
-										dates: allDates,
-										members: members,
-										projects: projects,
-										schedules: groupedSchedules
+										title: "Schedule: Team Rollup",
+										allDates: allDates,							// used to render columns
+										allMembers: allMembers,						// used to render dropdown
+										allProjects: allProjects,					// used to render dropdown
+										processedSchedules: processedSchedules		// the magic object
 									}
 								);
 							}
-						)
+						);
 					}
-				);		
+				)
 			}
-		);		
+		);	
 	}
 );
-
 
 router.get(
 	'/member/:id',
@@ -80,22 +89,102 @@ router.get(
 		db.schedules.find(
 			{ "team_member_id": member_id },
 			function(err, schedules) {
-				var teamMemberSchedules = _.groupBy(schedules, 'team_member_id');
+				var projectSchedules = _.groupBy(schedules, 'project_id');
 
 				db.members.find({}).sort({ name: 1 }).exec(
-					function(err, members) {
+					function(err, allMembers) {
+
 						db.projects.find({}).sort({ name: 1}).exec(
 							function(err, projects) {
-								var member = _.find(members, function(mem) { return mem._id == member_id });
+								var processedSchedules = {};
+
+								_.each(
+								  	projectSchedules,
+								  	function(current, key, all) {
+
+								  		var project = getValue(projects, key);
+								  		var processedDates = processDates(current);
+
+										processedSchedules[key] = {
+											name: project.name,
+											link: "/schedule/project/" + key,
+											_id: key,
+											dates: processedDates
+										}
+									}
+								);
+
+								var member = getValue(allMembers, member_id);
+
+								console.log(processedSchedules);
+
 								res.render(
 									'schedule/index',
 									{
 										title: "Schedule: " + member.name,
-										member: member, 
-										dates: allDates,
-										members: members,
-										projects: projects,
-										schedules: teamMemberSchedules
+										allDates: allDates,
+										allMembers: allMembers,
+										allProjects: projects,
+										processedSchedules: processedSchedules
+									}
+								);
+							}
+						)
+					}
+				);		
+			}
+		);		
+	}
+);
+
+router.get(
+	'/project/:id',
+	function (req, res) {
+		var db = req.db;
+		var allDates = getAllDates();
+		var project_id = req.params.id;
+
+		db.schedules.find(
+			{ "project_id": project_id },
+			function(err, projectSchedules) {
+				var memberSchedules = _.groupBy(projectSchedules, 'team_member_id');
+
+				db.members.find({}).sort({ name: 1 }).exec(
+					function(err, allMembers) {
+
+						db.projects.find({}).sort({ name: 1}).exec(
+							function(err, allProjects) {
+
+								var processedSchedules = {};
+
+								_.each(
+								  	memberSchedules,
+								  	function(current, key, all) {
+
+								  		var member = getValue(allMembers, key);
+								  		var processedDates = processDates(current);
+
+										processedSchedules[key] = {
+											name: member.name,
+											link: "/schedule/member/" + key,
+											_id: key,
+											dates: processedDates
+										}
+									}
+								);
+
+								var project = getValue(allProjects, project_id);
+
+								console.log(processedSchedules);
+
+								res.render(
+									'schedule/index',
+									{
+										title: "Schedule: " + project.name,
+										allDates: allDates,
+										allMembers: allMembers,
+										allProjects: allProjects,
+										processedSchedules: processedSchedules
 									}
 								);
 							}
@@ -108,10 +197,23 @@ router.get(
 );
 
 
+function getValue(entities, id) {
+	var entity = _.find(entities, function(ent) { return ent._id == id });
+	return (entity == null) ? {} : entity;
+};
+
+function processDates(dates) {
+	var processedDates = {};
+	_.each(dates, function(current, key, all) {
+		processedDates[ moment(current.date).format("MM/DD") ] = current.utilization
+	});
+
+	return processedDates;
+};
 
 function getAllDates() {
 	var allDates = [];
-	var currentDate = moment();
+	var currentDate = moment("12/15/2014");
 	
 	allDates.push(
 		currentDate.format("MM/DD")
@@ -127,5 +229,6 @@ function getAllDates() {
 	}
 
 	return allDates;
-}
+};
+
 module.exports = router;

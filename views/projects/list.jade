@@ -31,9 +31,13 @@ block content
 						tr
 							// td #{project._id}
 							// td #{project.client_id}
+
+							//- TODO: Null Check
 							td= _.find(clients, function(client) { return client._id == project.client_id; }).name
 							td #{project.name}
 							td #{project.contact}
+
+							//- TODO: Null Check
 							td= _.find(members, function(member) { return member._id == project.techLead; }).name
 
 							td #{project.sbm}

@@ -18,7 +18,7 @@ block content
 					a(href='/schedule/members', data-toggle='tooltip', data-placement='top', title='Rollup schedules per team member') Team Rollup
 
 				li
-					a(href='/schedule/projects', data-toggle='tooltip', data-placement='top', title='Rollup schedules per team member') Project Rollup
+					a(href='/schedule/projects', data-toggle='tooltip', data-placement='top', title='Rollup schedules per project') Project Rollup
 
 				li(class='dropdown' role='presentation')
 					a(class='dropdown-toggle', type='button', data-toggle='dropdown', aria-expanded='false', href='#')
@@ -26,7 +26,7 @@ block content
 						span(class='caret')
 
 						ul(class='dropdown-menu dropdown-menu-right scrollable-menu', role='menu')
-							each member in members
+							each member in allMembers
 								li
 									a(href='/schedule/member/#{member._id}') #{member.name}
 
@@ -36,38 +36,32 @@ block content
 						span(class='caret')
 
 						ul(class='dropdown-menu dropdown-menu-right scrollable-menu', role='menu')
-							each project in projects
+							each project in allProjects
 								li
 									a(href='/schedule/project/#{project._id}') #{project.name}
 	div(class='row')
 		div(class='col-md-12')
 			div(id='schedule')
 
-				with(schedules)
-					if(_.isEmpty(schedules))
-						div(class='alert alert-info') No Scheudles Found
+				with(processedSchedules)
+					if(_.isEmpty(processedSchedules))
+						div(class='alert alert-info') No Schedules Found
 					else
 						table(class='table table-condensed')
 							thead
 								tr
-									th
-										span(class='sr-only') Team Member
-									each date in dates
+									th 
+									each date in allDates
 										th(class='text-center') #{date}
 							tbody
-								each member in members
+								each schedule in processedSchedules
 									tr
 										td(class='member-name')
-											a(href='/schedule/member/#{member._id}') #{member.name}
+											a(href='#{schedule.link}') #{schedule.name}
 
-										each date in dates
-											// if > 98, red
-											// if 90-98, yellow
-											// otherwise, green
-											if false
-												td(class='warning text-center') --
-											else if true
-												td(class='danger text-center') --
-											else 
-												td(class='success text-center') --
+										each date in allDates
+											if(_.has(schedule.dates, date))
+												td #{schedule.dates[date]}
+											else
+												td --
 

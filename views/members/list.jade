@@ -32,7 +32,7 @@ block content
 							td #{member.name}
 							td= _.find(positions, function(position) { return position._id == member.position_id; }).name
 							td 
-								a(href="#")
+								a(href="/schedule/member/#{member._id}")
 									span(class='glyphicon glyphicon-calendar', aria-hidden='true')
 									span(class='sr-only') Schedule
 							td 
