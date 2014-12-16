@@ -1,11 +1,12 @@
 extends ../layout
 
 block scripts
-	script(type='text/javascript', src='/javascripts/code-reviews.js')
+	script(type='text/javascript', src='/javascripts/page-managers/schedule/index.js')
 
 	script(type='text/javascript').
 		$(document).ready(function() {
-			  $('[data-toggle="tooltip"]').tooltip();
+			  var pageManager = new PageManager();
+			  pageManager.init();
 		});
 		
 block content
@@ -39,29 +40,58 @@ block content
 							each project in allProjects
 								li
 									a(href='/schedule/project/#{project._id}') #{project.name}
+
+				if(editingEnabled)
+					li
+						button(id='editible-grid-toggle-button', class='btn btn-primary', data-toggle='tooltip', data-placement='top', title='Editable Grid')
+							span(class='glyphicon glyphicon-th')
+							span(class='sr-only') Editable Grid
+
+					li
+						button(id='duplicator-toggle-button', class='btn btn-primary', data-toggle='tooltip', data-placement='top', title='Edit Mode')
+							span(class='glyphicon glyphicon-th-list icon-rotate-90')
+							span(class='sr-only') Duplicate Mode
+
+						
+
 	div(class='row')
 		div(class='col-md-12')
 			div(id='schedule')
+				if(_.isEmpty(processedSchedules))
+					div(class='alert alert-info') No Schedules Found
+				else
+					table(class='table table-condensed')
+						thead
+							tr
+								th
 
-				with(processedSchedules)
-					if(_.isEmpty(processedSchedules))
-						div(class='alert alert-info') No Schedules Found
-					else
-						table(class='table table-condensed')
-							thead
+								each date in allDates
+									th(class='text-center') #{date}
+
+							tr(class='duplicate-column-tool')
+								td Duplicate Column Tool
+								each date in allDates
+									td(class='duplicate-column')
+										button(id='edit-mode-button', class='btn btn-primary btn-xs')
+											span(class='glyphicon glyphicon-arrow-right')
+											span(class='sr-only') Duplicate Column to Next
+										
+						tbody
+							//- row. processed schedule is a project or a team member.
+							each schedule in processedSchedules
 								tr
-									th 
-									each date in allDates
-										th(class='text-center') #{date}
-							tbody
-								each schedule in processedSchedules
-									tr
-										td(class='member-name')
-											a(href='#{schedule.link}') #{schedule.name}
+									td(class='member-name')
+										a(href='#{schedule.link}') #{schedule.name}
 
-										each date in allDates
+									//- column. each column is a date and utilization value.
+									each date in allDates
+										td 
+											//- the processed schedule has a key of the current date
 											if(_.has(schedule.dates, date))
-												td #{schedule.dates[date]}
-											else
-												td --
+												span(class='data-value') #{schedule.dates[date].utilization}
+											else 
+												span(class='data-value') --
+
+											if(editingEnabled)
+												input(class='utilization-field')											
 
