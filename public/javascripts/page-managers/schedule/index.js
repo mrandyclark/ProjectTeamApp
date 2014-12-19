@@ -14,11 +14,6 @@ PageManager.prototype.bindEvents = function() {
 
 	$('[data-toggle="tooltip"]').tooltip()
 
-	$('#duplicator-toggle-button').on(
-		"click",
-		$.proxy(this.handleDuplicatorToggleButton, this)
-	);
-
 	$('#editible-grid-toggle-button').on(
 		"click",
 		$.proxy(this.handleEditableGridToggleButton, this)
@@ -29,24 +24,11 @@ PageManager.prototype.bindEvents = function() {
 	return false;
 };
 
-PageManager.prototype.handleDuplicatorToggleButton = function(evt) {
-	evt.preventDefault();
-	var $el = $(evt.target).closest("button");
-	var isActive = $el.hasClass("active");
-	var $table = $("#schedule table");
-
-	$table.toggleClass("duplicator-enabled", !isActive);
-	$el.toggleClass("active", !isActive);
-
-
-	return $el;
-};
-
 PageManager.prototype.handleEditableGridToggleButton = function(evt) {
 	evt.preventDefault();
 	var $el = $(evt.target).closest("button");
 	var isActive = $el.hasClass("active");
-	var $table = $("#schedule table");
+	var $table = $(".schedule table");
 
 	$table.toggleClass("editing", !isActive);
 	$el.toggleClass("active", !isActive);

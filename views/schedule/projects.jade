@@ -1,0 +1,84 @@
+mixin scheduleTable(projects)
+	div(class='schedule')
+		if(_.isEmpty(projects))
+			div(class='alert alert-info') No Schedules Found
+		else
+			table(class='table table-condensed')
+				thead
+					tr
+						th
+
+						each date in allDates
+							th(class='text-center') #{date}
+								
+				tbody
+					//- row. processed schedule is a project or a team member.
+					each project in projects
+						tr
+							td(class='member-name')
+								a(href='#{project.link}') #{project.name}
+
+							//- column. each column is a date and utilization value.
+							each date in allDates
+								td(class='text-center')
+									//- the processed project has a key of the current date
+									if(_.has(project.dates, date))
+										span(class='data-value') #{project.dates[date]}
+									else 
+										span(class='data-value') --
+
+									if(editingEnabled)
+										input(class='utilization-field')
+
+extends ../layout
+
+block scripts
+	script(type='text/javascript', src='/javascripts/page-managers/schedule/index.js')
+
+	script(type='text/javascript').
+		$(document).ready(function() {
+			  var pageManager = new PageManager();
+			  pageManager.init();
+		});
+		
+block content
+	div(class='row')
+		div(class='col-md-12')
+			ul(class='nav nav-pills pull-right')
+				li
+					a(href='/schedule/members', data-toggle='tooltip', data-placement='top', title='Rollup schedules per team member') Team Rollup
+
+				li
+					a(href='/schedule/projects', data-toggle='tooltip', data-placement='top', title='Rollup schedules per project') Project Rollup
+
+				li(class='dropdown' role='presentation')
+					a(class='dropdown-toggle', type='button', data-toggle='dropdown', aria-expanded='false', href='#')
+						| Members 
+						span(class='caret')
+
+						ul(class='dropdown-menu dropdown-menu-right scrollable-menu', role='menu')
+							each member in allMembers
+								li
+									a(href='/schedule/member/#{member._id}') #{member.name}
+
+				li(class='dropdown' role='presentation')
+					a(class='dropdown-toggle', type='button', data-toggle='dropdown', aria-expanded='false', href='#')
+						| Projects 
+						span(class='caret')
+
+						ul(class='dropdown-menu dropdown-menu-right scrollable-menu', role='menu')
+							each project in allProjects
+								li
+									a(href='/schedule/project/#{project._id}') #{project.name}
+
+	div(class='row')
+		div(class='col-md-12')
+			h2(class='h3') Active Projects
+			+scheduleTable(activeProjects)
+
+	div(class='row')
+		div(class='col-md-12')
+			h2(class='h3') Planned Projects
+			+scheduleTable(inactiveProjects)
+														
+

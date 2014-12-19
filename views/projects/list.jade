@@ -22,6 +22,7 @@ block content
 						th Tech Lead
 						th SBM Project #
 						th Size
+						th Active
 						th
 							span(class='sr-only') Edit
 						//th
@@ -42,6 +43,7 @@ block content
 
 							td #{project.sbm}
 							td #{project.size}
+							td #{project.is_active}
 							td
 								a(href='#')
 									span(class='glyphicon glyphicon-pencil', aria-hidden='true')
@@ -91,6 +93,13 @@ block content
 							option S
 							option M
 							option L
+
+				div(class='form-group')
+					label(for='project-size', class='control-label col-sm-4') Status
+					div(class='col-sm-8')
+						select(id='project-size', class='form-control', name='is_active')
+							option(value='true') Active
+							option(value='false') Inactive
 
 				div(class='form-group')
 					div(class='col-sm-12')

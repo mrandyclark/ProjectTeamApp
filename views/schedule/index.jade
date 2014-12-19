@@ -11,9 +11,7 @@ block scripts
 		
 block content
 	div(class='row')
-		div(class='col-md-12') 
-			h2(class='h3 pull-left') #{title}
-		
+		div(class='col-md-12')
 			ul(class='nav nav-pills pull-right')
 				li
 					a(href='/schedule/members', data-toggle='tooltip', data-placement='top', title='Rollup schedules per team member') Team Rollup
@@ -46,17 +44,14 @@ block content
 						button(id='editible-grid-toggle-button', class='btn btn-primary', data-toggle='tooltip', data-placement='top', title='Editable Grid')
 							span(class='glyphicon glyphicon-th')
 							span(class='sr-only') Editable Grid
-
-					li
-						button(id='duplicator-toggle-button', class='btn btn-primary', data-toggle='tooltip', data-placement='top', title='Edit Mode')
-							span(class='glyphicon glyphicon-th-list icon-rotate-90')
-							span(class='sr-only') Duplicate Mode
-
-						
+							
+	div(class='row')
+		div(class='col-md-12') 
+			h2(class='h3 pull-left') #{title}
 
 	div(class='row')
 		div(class='col-md-12')
-			div(id='schedule')
+			div(class='schedule')
 				if(_.isEmpty(processedSchedules))
 					div(class='alert alert-info') No Schedules Found
 				else
