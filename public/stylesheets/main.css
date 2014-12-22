@@ -29,7 +29,10 @@ main {
 .backup-presenter { color: #46b8da; }
 
 .schedule { overflow-x: scroll;}
-.schedule .member-name { min-width: 200px;}
+.schedule td,
+.schedule th { text-align: center;}
+
+.schedule .member-name { min-width: 200px; text-align: left;}
 
 /* by default, hidden */
 .schedule table .utilization-field,
@@ -44,6 +47,10 @@ main {
 .schedule .editing .utilization-field { display: block;}
 .schedule .editing tr.duplicate-column-tool { display: table-row; }
 
+.schedule td div.data-value { width: 100%; height: 100%;}
+.success { background-color: #5cb85c;}
+.warning { background-color: #f0ad4e;}
+.danger { background-color: #d9534f;}
 
 
 

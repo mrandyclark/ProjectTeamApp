@@ -1,3 +1,22 @@
+mixin dataValue(value)
+	if(value > .8)
+		td(class='danger') 
+			span(class='data-value') #{value}
+			if(editingEnabled)
+				input(class='utilization-field')
+
+	if(value > .6)
+		td(class='warning') 
+			span(class='data-value') #{value}
+			if(editingEnabled)
+				input(class='utilization-field')
+
+	else
+		td(class='success') 
+			span(class='data-value') #{value}
+			if(editingEnabled)
+				input(class='utilization-field')
+
 mixin scheduleTable(projects)
 	div(class='schedule')
 		if(_.isEmpty(projects))
@@ -20,15 +39,17 @@ mixin scheduleTable(projects)
 
 							//- column. each column is a date and utilization value.
 							each date in allDates
-								td 
-									//- the processed project has a key of the current date
-									if(_.has(project.dates, date))
-										span(class='data-value') #{project.dates[date]}
-									else 
-										span(class='data-value') --
 
-									if(editingEnabled)
-										input(class='utilization-field')
+								//- the processed project has a key of the current date
+								if(_.has(project.dates, date))
+									+dataValue(project.dates[date])
+								else 
+									td(class='data-value success') 
+										--
+										if(editingEnabled)
+											input(class='utilization-field')
+
+									
 
 extends ../layout
 
