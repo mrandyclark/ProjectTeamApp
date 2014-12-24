@@ -1,14 +1,14 @@
 PageManager = function (devmgrs, srdevs, devs, cantPresent, allRooms) {
-	this.teamDevManagers =  devmgrs.split(',');
-	this.teamSrDevelopers = srdevs.split(',');
-	this.teamDevelopers = devs.split(',');
-	this.teamCantPresent = cantPresent.split(',');
-	this.teamRooms = allRooms.split(',');
+	this._teamDevManagers =  devmgrs.split(',');
+	this._teamSrDevelopers = srdevs.split(',');
+	this._teamDevelopers = devs.split(',');
+	this._teamCantPresent = cantPresent.split(',');
+	this._teamRooms = allRooms.split(',');
 };
 
 PageManager.prototype.init = function () {
 	// set default team
-	// this.setClarkTeam();
+	this.setTeam();
 
 	// events
 	this.bindEvents();
@@ -27,12 +27,33 @@ PageManager.prototype.bindEvents = function() {
 		$.proxy(this.handleGeneration, this)
 	);
 
+
+	$("a#save").on(
+		"click",
+		$.proxy(this.handleSave, this)
+	);
+
 	return false;
+};
+
+PageManager.prototype.handleSave = function(evt) {
+	evt.preventDefault();
+	var cantPresent = [];
+
+	_.each(this.codeReviewTeams, function(team) {
+		var member = _.findWhere(team.members, {"isPresenting": true});
+
+		cantPresent.push(member.name);
+	});
+
+	cantPresent.sort();
+
+	return alert("Save cant presenter list as: " + cantPresent.join(', '));
 };
 
 PageManager.prototype.handleGeneration = function(evt) {
 	evt.preventDefault();
-	// this.setClarkTeam();
+	this.setTeam();
 	return this.fullGenerate();
 };
 
@@ -44,21 +65,23 @@ PageManager.prototype.handleGeneration = function(evt) {
 PageManager.prototype.fullGenerate = function(evt) {
 	this.generateTeams();
 	this.setPresenters();
+	this.sortTeams();
 	this.showReviewTeams();
 };
 
 //
 // clark team is the best, obvi
 //
-// PageManager.prototype.setClarkTeam = function() {
-// 	this.teamDevManagers = ["Andy Clark", "Matt Tordoff", "Kenny Nguyen"];
-// 	this.teamSrDevelopers = ["Alex Wicks", "Hardik Nathwani", "Jared Barnett", "Justin Allen", "Sebastian Moderski", "Shawn Farmer"];
-// 	this.teamDevelopers = ["Aaron Rutledge", "Andy Jepkes", "Arvind Dayal", "Dan Hawkley", "Jeremy Sweetwood", "Ian Cropper", "Matt Lackey", "Robert River", "Zeb Lawrence"]
-// 	this.teamCantPresent = [];
-// 	this.teamRooms = ["Yen", "Bucky", "Charles", "Pear"];
+PageManager.prototype.setTeam = function() {
+	// http://stackoverflow.com/questions/21003059/how-do-you-clone-an-array-of-objects-using-underscore
+	this.teamDevManagers = _.map(this._teamDevManagers, _.clone);
+	this.teamSrDevelopers = _.map(this._teamSrDevelopers);
+	this.teamDevelopers = _.map(this._teamDevelopers);
+	this.teamCantPresent = _.map(this._teamCantPresent);
+	this.teamRooms = _.map(this._teamRooms);
 
-// 	return false;
-// };
+	return false;
+};
 
 // 
 // the magic happens here
@@ -127,7 +150,7 @@ PageManager.prototype.getTeamMember = function() {
 	var dev = "";
 
 	if(numDevMgr > 0) {
-		rand = this.getRandomInt(numDevMgr);
+		rand = _.getRandomInt(numDevMgr);
 		if(this.teamDevManagers[rand] != null)
 		{
 			dev = this.teamDevManagers[rand];
@@ -136,7 +159,7 @@ PageManager.prototype.getTeamMember = function() {
 		}
 
 	} else if(numSrDev > 0) {
-		rand = this.getRandomInt(numSrDev);
+		rand = _.getRandomInt(numSrDev);
 
 		if(this.teamSrDevelopers[rand] != null)
 		{
@@ -146,7 +169,7 @@ PageManager.prototype.getTeamMember = function() {
 		}
 
 	} else if(numDev > 0) {
-		rand = this.getRandomInt(numDev);
+		rand = _.getRandomInt(numDev);
 
 		if(this.teamDevelopers[rand] != null)
 		{
@@ -180,11 +203,12 @@ PageManager.prototype.showReviewTeams = function() {
 //
 PageManager.prototype.renderTeamList = function(team) {
 
-	var $list = $("<ul class='list-unstyled code-review-team' />");
-
-	$list.append(
-		"<li class='room'><strong>" + team.room + "</strong></li>"
+	var $container = $("<div class='code-review-team' />");
+	$container.append(
+		"<strong>" + team.room + "</strong>"
 	);
+
+	var $list = $("<ul class='list-unstyled code-review-team' />");
 
 	for(var i = 0; i < team["members"].length; i++)
 	{
@@ -193,15 +217,15 @@ PageManager.prototype.renderTeamList = function(team) {
 		);
 	}
 
-	$("#teams").append($list);
+	$container.append($list);
+	$("#teams").append($container);
 };
 
 //
 // render a list item for the team, including styles for presenter and backup presenter
 //
 PageManager.prototype.renderTeamMemberListItem = function(teamMember) {
-
-	var $el = $("<li class='tier' />");
+	var $el = $("<li />");
 
 	if(teamMember["isPresenting"]) {
 		$el.addClass("presenter");
@@ -222,10 +246,33 @@ PageManager.prototype.renderTeamMemberListItem = function(teamMember) {
 // for each team, grab a random presenter and backup presenter
 //
 PageManager.prototype.setPresenters = function() {
-	for(var i = 0; i < this.codeReviewTeams.length; i++) {
-		this.getPresenter(this.codeReviewTeams[i], true);
-		this.getPresenter(this.codeReviewTeams[i], false);
-	}
+
+	var getPresenter = $.proxy(this.getPresenter, this);
+
+	_.each(this.codeReviewTeams, function(team) {
+		getPresenter(team, true); // presenter
+		getPresenter(team, false); // backup presenter
+	});
+
+	return this.codeReviewTeams;
+};
+
+//
+// sort teams so presenter is first, backup is second, then alpha by first name
+//
+PageManager.prototype.sortTeams = function() {
+
+	_.each(this.codeReviewTeams, function(team) {
+		team.members = _.sortBy(team.members, "name");
+
+		var presenterIndex = _.getIndexBy(team.members, "isPresenting", true);
+		team.members = _.move(team.members, presenterIndex, 0);
+
+		var backupIndex = _.getIndexBy(team.members, "isBackupPresenter", true);
+		team.members = _.move(team.members, backupIndex, 1);
+	});
+
+	return this.codeReviewTeams;
 };
 
 //
@@ -235,7 +282,7 @@ PageManager.prototype.setPresenters = function() {
 //
 PageManager.prototype.getPresenter = function(team, isPresenter) {
 	var members = team["members"];
-	var rand = this.getRandomInt(members.length);
+	var rand = _.getRandomInt(members.length);
 
 	if(this.teamCantPresent.indexOf(members[rand]["name"]) > -1)
 	{
@@ -248,12 +295,5 @@ PageManager.prototype.getPresenter = function(team, isPresenter) {
 		? "isPresenting"
 		: "isBackupPresenter";
 
-	team["members"][rand][field] = true;
-};
-
-//
-// get a random integer using a maximum number
-//
-PageManager.prototype.getRandomInt = function(max) {
-	return Math.floor(Math.random() * (max));
+	return team["members"][rand][field] = true;
 };
