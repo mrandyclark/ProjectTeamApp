@@ -20,6 +20,15 @@ main {
     overflow-x: hidden;
 }
 
+[contenteditable="true"]{
+	padding: 3px;
+	cursor: pointer;
+}
+
+[contenteditable="true"]:focus {
+	outline: 1px solid #3B90D1;
+}
+
 .presenter { color: #d9534f; }
 .backup-presenter { color: #46b8da; }
 
@@ -29,23 +38,4 @@ main {
 .schedule th { text-align: center;}
 
 .schedule .member-name { min-width: 200px; text-align: left;}
-
-/* by default, hidden */
-.schedule table .utilization-field,
-.schedule table .done-button,
-.schedule table tr.duplicate-column-tool {display: none;}
-
-
-/* during editing, hide these */
-.schedule .editing .data-value { display: none;}
-
-/* during editing, show these */
-.schedule .editing .utilization-field { display: block;}
-.schedule .editing tr.duplicate-column-tool { display: table-row; }
-
 .schedule td div.data-value { width: 100%; height: 100%;}
-
-
-
-
-.utilization-field { width: 30px;}

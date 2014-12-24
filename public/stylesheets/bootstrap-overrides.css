@@ -30,16 +30,15 @@ a:hover { color: #3B90D1;}
 	color: #fff;
 }
 
-.table-bordered,
-.table-bordered>thead>tr>th,
-.table-bordered>tbody>tr>th,
-.table-bordered>tfoot>tr>th,
-.table-bordered>thead>tr>td,
-.table-bordered>tbody>tr>td,
-.table-bordered>tfoot>tr>td { border: 1px solid #332F2E; }
+.table>thead>tr>th,
+.table>tbody>tr>th,
+.table>tfoot>tr>th,
+.table>thead>tr>td,
+.table>tbody>tr>td,
+.table>tfoot>tr>td { border-top: 1px solid #999; }
 
-.table-bordered>thead>tr>th,
-.table-bordered>thead>tr>td { border-bottom: 2px solid #332F2E;}
+.table>thead>tr>th,
+.table>thead>tr>td { border-bottom: 2px solid #999;}
 
 .table>thead>tr>td.success,
 .table>tbody>tr>td.success,
@@ -52,7 +51,7 @@ a:hover { color: #3B90D1;}
 .table>tfoot>tr.success>td,
 .table>thead>tr.success>th,
 .table>tbody>tr.success>th,
-.table>tfoot>tr.success>th { background-color: #C8FFCB;}
+.table>tfoot>tr.success>th { background-color: #c3efb1;}
 
 .table>thead>tr>td.warning,
 .table>tbody>tr>td.warning,
@@ -65,7 +64,7 @@ a:hover { color: #3B90D1;}
 .table>tfoot>tr.warning>td,
 .table>thead>tr.warning>th,
 .table>tbody>tr.warning>th,
-.table>tfoot>tr.warning>th { background-color: #FFFF00;}
+.table>tfoot>tr.warning>th { background-color: #faf2cc;}
 
 .table>thead>tr>td.danger,
 .table>tbody>tr>td.danger,
@@ -78,6 +77,6 @@ a:hover { color: #3B90D1;}
 .table>tfoot>tr.danger>td,
 .table>thead>tr.danger>th,
 .table>tbody>tr.danger>th,
-.table>tfoot>tr.danger>th { background-color: #CC1814;}
+.table>tfoot>tr.danger>th { background-color: #ebcccc;}
 
 

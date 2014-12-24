@@ -39,11 +39,11 @@ block content
 								li
 									a(href='/schedule/project/#{project._id}') #{project.name}
 
-				if(editingEnabled)
-					li
-						button(id='editible-grid-toggle-button', class='btn btn-primary', data-toggle='tooltip', data-placement='top', title='Editable Grid')
-							span(class='glyphicon glyphicon-th')
-							span(class='sr-only') Editable Grid
+				//- if(editingEnabled)
+				//- 	li
+				//- 		button(id='editible-grid-toggle-button', class='btn btn-primary', data-toggle='tooltip', data-placement='top', title='Editable Grid')
+				//- 			span(class='glyphicon glyphicon-th')
+				//- 			span(class='sr-only') Editable Grid
 							
 	div(class='row')
 		div(class='col-md-12') 
@@ -63,13 +63,13 @@ block content
 								each date in allDates
 									th(class='text-center') #{date}
 
-							tr(class='duplicate-column-tool')
-								td Duplicate Column Tool
-								each date in allDates
-									td(class='duplicate-column')
-										button(id='edit-mode-button', class='btn btn-primary btn-xs')
-											span(class='glyphicon glyphicon-arrow-right')
-											span(class='sr-only') Duplicate Column to Next
+							//- tr(class='duplicate-column-tool')
+							//- 	td Duplicate Column Tool
+							//- 	each date in allDates
+							//- 		td(class='duplicate-column')
+							//- 			button(id='edit-mode-button', class='btn btn-primary btn-xs')
+							//- 				span(class='glyphicon glyphicon-arrow-right')
+							//- 				span(class='sr-only') Duplicate Column to Next
 										
 						tbody
 							//- row. processed schedule is a project or a team member.
@@ -80,13 +80,45 @@ block content
 
 									//- column. each column is a date and utilization value.
 									each date in allDates
-										td 
+										td(contenteditable='true')
 											//- the processed schedule has a key of the current date
 											if(_.has(schedule.dates, date))
-												span(class='data-value') #{schedule.dates[date].utilization}
+												| #{schedule.dates[date].utilization}
 											else 
-												span(class='data-value') --
+												--								
 
-											if(editingEnabled)
-												input(class='utilization-field')											
+	div(class='row')
+		div(class='col-md-12')
+			div(class='schedule')
+				table(class='table table-condensed')
+					thead
+						tr
+							th
+
+							each date in allDates
+								th(class='text-center') #{date}
+
+						//- tr(class='duplicate-column-tool')
+						//- 	td Duplicate Column Tool
+						//- 	each date in allDates
+						//- 		td(class='duplicate-column')
+						//- 			button(id='edit-mode-button', class='btn btn-primary btn-xs')
+						//- 				span(class='glyphicon glyphicon-arrow-right')
+						//- 				span(class='sr-only') Duplicate Column to Next
+									
+					tbody
+						//- row. processed schedule is a project or a team member.
+						each schedule in processedSchedules
+							tr
+								td(class='member-name')
+									a(href='#{schedule.link}') #{schedule.name}
+
+								//- column. each column is a date and utilization value.
+								each date in allDates
+									td(contenteditable='true')
+										//- the processed schedule has a key of the current date
+										if(_.has(schedule.dates, date))
+											| #{schedule.dates[date].utilization}
+										else 
+											--								
 
