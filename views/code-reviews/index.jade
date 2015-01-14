@@ -5,7 +5,7 @@ block scripts
 
 	script(type='text/javascript').
 		$(document).ready(function() {
-			var pageManager = new PageManager( "#{ devManagers }", "#{ srDevs }", "#{ developers }", "#{cantPresent}", "#{ rooms }" );
+			var pageManager = new PageManager( !{devManagers}, !{srDevs}, !{developers}, !{cantPresent}, !{rooms} );
 			pageManager.init();
 		});
 		

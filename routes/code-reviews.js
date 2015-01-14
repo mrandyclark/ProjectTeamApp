@@ -42,11 +42,11 @@ function index (req, res) {
 		res.render(
 			'code-reviews/index',
 			{
-				devManagers: _.pluck(devManagers, 'name'),
-				srDevs: _.pluck(srDevs, 'name'),
-				developers: _.pluck(developers, 'name'),
-				cantPresent: _.pluck(cantPresent, 'name'),
-				rooms: _.pluck(allRooms, 'name')
+				devManagers: JSON.stringify(devManagers),
+				srDevs: JSON.stringify(srDevs),
+				developers: JSON.stringify(developers),
+				cantPresent: JSON.stringify(cantPresent),
+				rooms: JSON.stringify(allRooms)
 			}
 		);
 	});

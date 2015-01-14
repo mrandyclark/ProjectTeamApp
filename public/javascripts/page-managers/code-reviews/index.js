@@ -1,9 +1,11 @@
 PageManager = function (devmgrs, srdevs, devs, cantPresent, allRooms) {
-	this._teamDevManagers =  devmgrs.split(',');
-	this._teamSrDevelopers = srdevs.split(',');
-	this._teamDevelopers = devs.split(',');
-	this._teamCantPresent = cantPresent.split(',');
-	this._teamRooms = allRooms.split(',');
+	this._teamDevManagers =  devmgrs;
+	this._teamSrDevelopers = srdevs;
+	this._teamDevelopers = devs;
+	this._teamCantPresent = cantPresent;
+	this._teamRooms = allRooms;
+
+	console.log(this._teamDevManagers);
 };
 
 PageManager.prototype.init = function () {
@@ -75,10 +77,10 @@ PageManager.prototype.fullGenerate = function(evt) {
 PageManager.prototype.setTeam = function() {
 	// http://stackoverflow.com/questions/21003059/how-do-you-clone-an-array-of-objects-using-underscore
 	this.teamDevManagers = _.map(this._teamDevManagers, _.clone);
-	this.teamSrDevelopers = _.map(this._teamSrDevelopers);
-	this.teamDevelopers = _.map(this._teamDevelopers);
-	this.teamCantPresent = _.map(this._teamCantPresent);
-	this.teamRooms = _.map(this._teamRooms);
+	this.teamSrDevelopers = _.map(this._teamSrDevelopers, _.clone);
+	this.teamDevelopers = _.map(this._teamDevelopers, _.clone);
+	this.teamCantPresent = _.map(this._teamCantPresent, _.clone);
+	this.teamRooms = _.map(this._teamRooms, _.clone);
 
 	return false;
 };
@@ -205,7 +207,7 @@ PageManager.prototype.renderTeamList = function(team) {
 
 	var $container = $("<div class='code-review-team' />");
 	$container.append(
-		"<strong>" + team.room + "</strong>"
+		"<strong>" + team.room.name + "</strong>"
 	);
 
 	var $list = $("<ul class='list-unstyled code-review-team' />");
@@ -237,7 +239,7 @@ PageManager.prototype.renderTeamMemberListItem = function(teamMember) {
 		$el.append("Backup: ");
 	}
 
-	$el.append(teamMember["name"])
+	$el.append(teamMember["name"].name)
 
 	return $el;
 };
@@ -283,18 +285,18 @@ PageManager.prototype.sortTeams = function() {
 PageManager.prototype.getPresenter = function(team, isPresenter) {
 	var members = team["members"];
 	var rand = _.getRandomInt(members.length);
-
+	var member = members[rand];
 	// check for 
-	if(this.teamCantPresent.indexOf(members[rand]["name"]) > -1)
+	if(member.cantPresent)
 	{
 		return this.getPresenter(team, isPresenter);
-	} else {
-		this.teamCantPresent.push(members[rand]["name"]);
 	}
+	
+	member.cantPresent = true;
 
 	var field = isPresenter
 		? "isPresenting"
 		: "isBackupPresenter";
 
-	return team["members"][rand][field] = true;
+	return member[field] = true;
 };
