@@ -18,7 +18,6 @@ function index (req, res) {
 			db.members.find(
 				{onsite: true},
 				function(err, allMembers) {
-					console.log(allMembers);
 					callback(null, allMembers);
 				}
 			);

@@ -1,4 +1,4 @@
-{"contact":"Windi Julias","name":"Eclipse 2.0","sbm":"16680","size":"M","is_active":true,"_id":"5VZZ6e6QUyyBAKSI","client_id":"xdPw0fbd4eWONCwL","techLead":"2XhEUnx9fRudguAO"}
-{"contact":"Windi Julias","name":"Eclipse 3.0","sbm":"16680","size":"M","is_active":false,"_id":"88998e6QUyyBAKSI","client_id":"xdPw0fbd4eWONCwL","techLead":"2XhEUnx9fRudguAO"}
-{"contact":"Neil McCorrison","name":"Portal Tablet","sbm":"12028","size":"M","is_active":true,"_id":"MMuXz1XRno9ccuOi","client_id":"xdPw0fbd4eWONCwL","techLead":"2XhEUnx9fRudguAO"}
-{"contact":"Mike Servas","name":"e-Brokerage","sbm":"14780","size":"L","is_active":true,"_id":"wB1VlJrXY3nuGDut","client_id":"uVSrKdz5I8Ia6fKG","techLead":"2XhEUnx9fRudguAO"}
+{"contact":"Windi Julias","name":"Eclipse 2.0","sbm":"16680","size":"M","status":"active","_id":"5VZZ6e6QUyyBAKSI","client_id":"xdPw0fbd4eWONCwL","techLead":"2XhEUnx9fRudguAO"}
+{"contact":"Windi Julias","name":"Eclipse 3.0","sbm":"16680","size":"M","status":"planned","_id":"88998e6QUyyBAKSI","client_id":"xdPw0fbd4eWONCwL","techLead":"2XhEUnx9fRudguAO"}
+{"contact":"Neil McCorrison","name":"Portal Tablet","sbm":"12028","size":"M","status":"active","_id":"MMuXz1XRno9ccuOi","client_id":"xdPw0fbd4eWONCwL","techLead":"2XhEUnx9fRudguAO"}
+{"contact":"Mike Servas","name":"e-Brokerage","sbm":"14780","size":"L","status":"active","_id":"wB1VlJrXY3nuGDut","client_id":"uVSrKdz5I8Ia6fKG","techLead":"2XhEUnx9fRudguAO"}

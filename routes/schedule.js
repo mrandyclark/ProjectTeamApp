@@ -207,7 +207,7 @@ function projects(req, res) {
 							processedSchedules[current._id] = {
 								name: current.name,
 								link: "/schedule/project/" + current._id,
-								active: current.is_active,
+								active: current.status == "active",
 								_id: current._id,
 								dates: processedDates
 							}
