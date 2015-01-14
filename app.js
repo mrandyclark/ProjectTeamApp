@@ -27,6 +27,7 @@ var routeCodeReviews = require('./routes/code-reviews');
 var routeProjects = require('./routes/projects');
 var routeSchedule = require('./routes/schedule');
 var routeClients = require('./routes/clients');
+var routeEstimates = require('./routes/estimates');
 
 // var mongoose = require('mongoose');
 // mongoose.connect('mongodb://localhost/projectsteam');
@@ -40,6 +41,10 @@ db.members = new Datastore({ filename: './database/team-members.db', autoload: t
 db.projects = new Datastore({ filename: './database/projects.db', autoload: true });
 db.schedules = new Datastore({ filename: './database/schedules.db', autoload: true });
 
+db.estimateTeams = new Datastore({ filename: './database/estimate-teams.db', autoload: true });
+db.estimateCapabilities = new Datastore({ filename: './database/estimate-capabilities.db', autoload: true });
+db.estimateFeatures = new Datastore({ filename: './database/estimate-features.db', autoload: true });
+
 // Make our db accessible to our router
 app.use(function(req,res,next){
     req.db = db;
@@ -52,6 +57,7 @@ app.use('/members', routeTeamMembers);
 app.use('/projects', routeProjects);
 app.use('/schedule', routeSchedule);
 app.use('/clients', routeClients);
+app.use('/estimates', routeEstimates);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

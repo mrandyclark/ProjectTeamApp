@@ -1,0 +1,42 @@
+extends ../layout
+
+block scripts
+	script(type='text/javascript', src='/javascripts/page-managers/estimates/index.js')
+
+	script(type='text/javascript').
+		$(document).ready(function() {
+			  var pageManager = new PageManager( !{capabilitiesString}, !{featuresString}, !{teamsString});
+			  pageManager.init();
+		});
+
+block content
+	div(class='row')
+		div(class='col-md-12') 
+			p Easily estimate an upcoming project based on a set of features. Some other type of disclaimer text to prevent default numbers to getting into actual sizings.
+
+	div(class='row')
+		div(class='col-md-2' id='capability-list')
+			h2(class='h4') Capabilities
+			ul(class='list-unstyled')
+				each capability in capabilities
+					li(data-capability-id='#{capability._id}') #{capability.name}
+
+		div(class='col-md-10' id='sizings')
+			h2(class='h4') #{project.name} Sizing
+
+			table(class='table table-condensed' id='sizings-table')
+				thead
+					tr
+						td
+							span(class='sr-only') Delete
+						td
+							span(class='sr-only') Feature
+						each team in teams
+							td #{team.name}
+					
+block footer
+	div(class='row')
+		div(class='col-md-12')
+			ul(class='list-unstyled list-inline')
+				li
+					a(href='/projects') Project List

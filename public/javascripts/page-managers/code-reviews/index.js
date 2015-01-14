@@ -100,7 +100,6 @@ PageManager.prototype.generateTeams = function() {
 	var codeReviewTeamMax = this.codeReviewTeams.length - 1;
 	var teamCount = this.teamDevManagers.length + this.teamSrDevelopers.length + this.teamDevelopers.length;
 
-
 	while(teamCount > 0)
 	{
 		var teamMember = this.getTeamMember();
@@ -149,8 +148,10 @@ PageManager.prototype.getTeamMember = function() {
 	var rand = 0;
 	var dev = "";
 
+	// TODO: consider refactor
 	if(numDevMgr > 0) {
 		rand = _.getRandomInt(numDevMgr);
+		
 		if(this.teamDevManagers[rand] != null)
 		{
 			dev = this.teamDevManagers[rand];
@@ -177,7 +178,6 @@ PageManager.prototype.getTeamMember = function() {
 			this.teamDevelopers.splice(rand, 1);
 			return dev;	
 		}
-
 	}
 
 	return false;
@@ -284,6 +284,7 @@ PageManager.prototype.getPresenter = function(team, isPresenter) {
 	var members = team["members"];
 	var rand = _.getRandomInt(members.length);
 
+	// check for 
 	if(this.teamCantPresent.indexOf(members[rand]["name"]) > -1)
 	{
 		return this.getPresenter(team, isPresenter);
