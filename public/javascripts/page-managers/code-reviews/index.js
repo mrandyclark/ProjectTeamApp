@@ -283,15 +283,20 @@ PageManager.prototype.sortTeams = function() {
 // isPresenter is a toggle for presenter/backup presenter
 //
 PageManager.prototype.getPresenter = function(team, isPresenter) {
+
+	console.log(team);
+	
 	var members = team["members"];
 	var rand = _.getRandomInt(members.length);
 	var member = members[rand];
+
 	// check for 
 	if(member.cantPresent)
 	{
 		return this.getPresenter(team, isPresenter);
 	}
 	
+	console.log(member);
 	member.cantPresent = true;
 
 	var field = isPresenter
