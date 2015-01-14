@@ -16,8 +16,9 @@ function index (req, res) {
 	async.waterfall([
 		function(callback) {
 			db.members.find(
-				{},
+				{onsite: true},
 				function(err, allMembers) {
+					console.log(allMembers);
 					callback(null, allMembers);
 				}
 			);
