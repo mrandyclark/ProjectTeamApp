@@ -4,8 +4,6 @@ PageManager = function (devmgrs, srdevs, devs, cantPresent, allRooms) {
 	this._teamDevelopers = devs;
 	this._teamCantPresent = cantPresent;
 	this._teamRooms = allRooms;
-
-	console.log(this._teamDevManagers);
 };
 
 PageManager.prototype.init = function () {
@@ -107,7 +105,7 @@ PageManager.prototype.generateTeams = function() {
 		var teamMember = this.getTeamMember();
 
 		this.codeReviewTeams[codeReviewTeam]["members"].push(
-			{"name": teamMember }
+			teamMember
 		);
 
 		if(codeReviewTeam == codeReviewTeamMax)
@@ -119,6 +117,8 @@ PageManager.prototype.generateTeams = function() {
 
 		teamCount--;
 	}
+
+	console.log(this.codeReviewTeams);
 };
 
 //
@@ -239,7 +239,7 @@ PageManager.prototype.renderTeamMemberListItem = function(teamMember) {
 		$el.append("Backup: ");
 	}
 
-	$el.append(teamMember["name"].name)
+	$el.append(teamMember.name)
 
 	return $el;
 };
@@ -284,8 +284,6 @@ PageManager.prototype.sortTeams = function() {
 //
 PageManager.prototype.getPresenter = function(team, isPresenter) {
 
-	console.log(team);
-	
 	var members = team["members"];
 	var rand = _.getRandomInt(members.length);
 	var member = members[rand];
@@ -295,8 +293,7 @@ PageManager.prototype.getPresenter = function(team, isPresenter) {
 	{
 		return this.getPresenter(team, isPresenter);
 	}
-	
-	console.log(member);
+
 	member.cantPresent = true;
 
 	var field = isPresenter
